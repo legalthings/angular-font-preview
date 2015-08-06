@@ -1,0 +1,14 @@
+{
+"name": "angular-font-selection",
+"description": "Select and display a number of fonts",
+"license": "MIT",
+"main": "src/font-selection.js",
+"ignore": [],
+"repository": {
+"type": "git",
+"url": "git://github.com/legalthings/angular-font-selection.git"
+},
+"dependencies": {
+"angular": "~1.3",
+}
+}
