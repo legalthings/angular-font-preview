@@ -3,20 +3,22 @@
 * Copyright (c) 2015 ; Licensed MIT
 */
 
-angular.module('angularFontSelection').directive('fontSelection', function(type) {
-  function () {
+angular.module('angularFontSelection', []);
+
+angular.module('angularFontSelection').directive('fontSelection', function() {
     'use strict';
-  
+
     return {
       restrict: 'EA',
-      templateUrl: 'src/directives/font-selection.tpl.html',
+      templateUrl: '/vendor/angular-font-selection/src/angular-font-selection.tpl.html',
       replace: true,
       scope: {
-	'onAccept': '&accept',
-	'name': '='
+	'selection': '=',
+	'text': '=',
+	'fonts': '='
       },
-      link: function(scope, elm, attrs) {
-	scope.$watch("name", function(value) {
+      link: function (scope, elm, attrs) {
+	scope.$watch("text", function (value) {
 	  var canvas = document.querySelectorAll('canvas');
 
 	  for (var i = 0; i < canvas.length; ++i) {
@@ -28,33 +30,33 @@ angular.module('angularFontSelection').directive('fontSelection', function(type)
 	});
       },
       controller: ['$scope', function ($scope) {
-	  $scope.name = "John Doe";
-	  $scope.fonts = type.fonts;
-	  $scope.fontFamily = "unselected";
+	  if (!$scope.text) $scope.text = "";
+	  $scope.fontFamily = null;
 
-	  $scope.setFont = function(font, $event) {
+	  $scope.setFont = function (font, $event) {
 	    $scope.fontFamily = font.family;
 
 	    $scope.resetStyling();
 	    var canvas = document.getElementById(font.family);
 	    var style = "1px solid red";
 	    canvas.style.border = canvas.style.border != style ? style : "1px solid black";
-	  }
+	  };
 
-	  $scope.resetStyling = function() {
+	  $scope.resetStyling = function () {
 	    var canvas = document.querySelectorAll('canvas');
 
 	    for (var i = 0; i < canvas.length; ++i) {
 	      canvas[i].style.border = "1px solid black";
 	    }
-	  }
+	  };
 	  
-	  $scope.onAccept = function () {
+	  $scope.$watchGroup(['fontFamily', 'text'], function () {
+	    if ($scope.text == "") return;
 	    var selCanvas = document.getElementById($scope.fontFamily);
-	    var img = selCanvas.toDataURL();
-	    type.save(img);
-	  }
+	    if (selCanvas == null) return;
+	    var imgBase64 = selCanvas.toDataURL();
+	    $scope.selection = {font: $scope.font, dataUrl: imgBase64};
+	  });
       }]
     };
-  }
 });
