@@ -1,6 +1,6 @@
 # Angular Font Selection
 
-Angular directive to display and select a font.
+Angular directive to display and select a font using canvases.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Angular directive to display and select a font.
 
 ```js
 angular.module('app', [
-  'angularFontSelection'
+  'fontSelection'
 ]);
 
 angular.module('app').controller('typeController', function ($scope) {
