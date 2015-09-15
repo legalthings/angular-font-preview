@@ -46,7 +46,7 @@ angular.module('fontSelection').directive('fontSelection', function () {
           
           ctx.font = scope.fonts[i].size + " " + scope.fonts[i].family;
           ctx.clearRect(0, 0, scope.width, scope.height);
-          ctx.fillText(value, 10, 35);
+          ctx.fillText(value, 10, scope.height / scope.scale - parseInt(scope.fonts[i].size));
         }
       });
     },
