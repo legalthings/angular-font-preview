@@ -30,20 +30,20 @@ angular.module('fontSelection').directive('fontSelection', function () {
     },
     link: function (scope, elm, attrs) {
       scope.$watch("text", function (value) {
-        var canvas = document.querySelectorAll('canvas');
-        
+        var canvas = document.querySelectorAll('.font-preview canvas');
+
         if (!scope.width) scope.width = 900;
         if (!scope.height) scope.height = 150;
 
         for (var i = 0; i < canvas.length; ++i) {
-          canvas[i].width = scope.width;          
+          canvas[i].width = scope.width;
           canvas[i].height = scope.height;
-          
+
           var ctx = canvas[i].getContext('2d');
-          
+
           if (!scope.scale) ctx.scale(1, 1);
           else ctx.scale(scope.scale, scope.scale);
-          
+
           ctx.font = scope.fonts[i].size + " " + scope.fonts[i].family;
           ctx.clearRect(0, 0, scope.width, scope.height);
           ctx.fillText(value, 10, scope.height / scope.scale - parseInt(scope.fonts[i].size));
